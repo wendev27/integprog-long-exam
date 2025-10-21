@@ -43,8 +43,13 @@ export default function Home() {
     setQuantity("");
   };
 
+  // 🧮 Compute total summary
+  const totalSubtotal = sales.reduce((sum, s) => sum + s.subtotal, 0);
+  const totalTax = sales.reduce((sum, s) => sum + s.tax, 0);
+  const totalSales = sales.reduce((sum, s) => sum + s.total, 0);
+
   return (
-    <main className="flex flex-col items-center justify-center py-44 bg-gradient-to-br from-blue-50 to-white p-6">
+    <main className="flex flex-col items-center justify-center py-22 bg-gradient-to-br from-blue-50 to-white p-6">
       <Card className="w-full max-w-2xl shadow-lg">
         <CardContent className="p-6">
           <h1 className="text-2xl font-bold text-center mb-6 text-blue-700">
@@ -78,7 +83,7 @@ export default function Home() {
 
           {/* 🧮 Table of sales */}
           {sales.length > 0 && (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto mb-6">
               <table className="w-full text-sm border-collapse">
                 <thead className="bg-blue-100 text-blue-700">
                   <tr>
@@ -104,6 +109,29 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
+          )}
+
+          {sales.length > 0 && (
+            <Card className="bg-blue-50 border-blue-200">
+              <CardContent className="p-4">
+                <h2 className="text-lg font-semibold text-blue-700 mb-2">
+                  🧮 Total Sales Summary
+                </h2>
+                <div className="space-y-1 text-gray-700">
+                  <p>
+                    <span className="font-medium">Total Subtotal:</span> ₱
+                    {totalSubtotal.toFixed(2)}
+                  </p>
+                  <p>
+                    <span className="font-medium">Total Tax (12%):</span> ₱
+                    {totalTax.toFixed(2)}
+                  </p>
+                  <p className="text-green-700 font-semibold text-lg">
+                    Total Sales: ₱{totalSales.toFixed(2)}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           )}
         </CardContent>
       </Card>
